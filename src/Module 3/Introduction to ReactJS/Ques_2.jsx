@@ -1,14 +1,7 @@
 import React from 'react';
 
 function Ques_2() {
-  let year;
-  try {
-    year = new Date().getFullYear();
-  } catch (error) {
-    year = 'Error fetching year';
-    // Optionally log the error
-    // console.error(error);
-  }
+  const year = new Date().getFullYear();
 
   return (
     <div>
