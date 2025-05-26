@@ -1,5 +1,13 @@
-// Passing Props to Components
-// Description: Create a Profile component that receives name and age as props and displays them.
+import React from 'react';
 
-// Step 1: Write your code within the file, by the name of component as Profile
-// Step 2: Update App.js to pass props to the Profile component
+const Profile = ({ name, age }) => {
+  return (
+    <div>
+      <h2>Profile</h2>
+      <p>Name: {name}</p>
+      <p>Age: {age}</p>
+    </div>
+  );
+};
+
+export default Profile;
