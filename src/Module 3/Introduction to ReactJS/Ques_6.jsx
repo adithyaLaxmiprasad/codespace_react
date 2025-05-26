@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const LoginMessage = ({ isLoggedIn }) => {
   return (
@@ -12,5 +13,9 @@ const LoginMessage = ({ isLoggedIn }) => {
   );
 };
 
-export default LoginMessage;
+// ✅ Add PropTypes validation
+LoginMessage.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired
+};
 
+export default LoginMessage;
