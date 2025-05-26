@@ -1,5 +1,6 @@
 import React from 'react';
 import Ques_1 from './Module 3/Introduction to ReactJS/Ques_1';
+import Ques_2 from './Module 3/Introduction to ReactJS/Ques_2'; // Add this line
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
       >
         <span> - Extra content here</span>
       </Ques_1>
+
+      {/* Display current year */}
+      <Ques_2 /> {/* Add this line to render Ques_2 */}
     </div>
   );
 }
