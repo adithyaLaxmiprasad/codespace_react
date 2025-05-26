@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Ques_1 = () => {
+// Functional component accepting props with a default message
+const Ques_1 = ({ message = "Hello, React!" }) => {
   return (
     <div>
-      Hello, React!
+      {message}
     </div>
   );
 };
 
 export default Ques_1;
-
