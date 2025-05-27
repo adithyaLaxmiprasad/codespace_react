@@ -1,31 +1,17 @@
-import React, { Suspense, lazy } from 'react';
-import { Outlet, Link } from 'react-router-dom';
-
-const Subpage = lazy(() => import('./Subpage'));
+import React from "react";
+import { Outlet, Link } from "react-router-dom";
 
 function About() {
   return (
     <div>
-      <h1>About Us</h1>
-      <p>Learn more about our application.</p>
+      <h2>About Page</h2>
+      <p>This page describes the About section of the app.</p>
+      
+      <Link to="subpage">Go to Subpage</Link>
 
-      <nav>
-        <Link to="subpage" style={{ marginRight: 10 }}>Subpage</Link>
-        <Link to="/">Home</Link>
-      </nav>
-
-      <hr />
-
-      <Suspense fallback={<div>Loading subpage...</div>}>
-        <Outlet />
-      </Suspense>
+      <Outlet /> {/* Render nested sub-routes here */}
     </div>
   );
 }
 
 export default About;
-
-// TEST SUGGESTIONS:
-// - Test links navigate correctly
-// - Test subpage lazy loading works (renders fallback first)
-// - Test Outlet renders nested content
