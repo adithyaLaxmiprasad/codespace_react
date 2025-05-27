@@ -4,8 +4,13 @@ const Simple_Form = () => {
   const [name, setName] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents page reload
+    event.preventDefault();
+    if (name.trim() === '') {
+      alert('Name cannot be empty.');
+      return;
+    }
     alert(`Hello, ${name}!`);
+    setName(''); // Clear input after submission
   };
 
   return (
