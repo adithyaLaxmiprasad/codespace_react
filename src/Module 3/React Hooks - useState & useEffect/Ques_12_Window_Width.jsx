@@ -1,15 +1,36 @@
 import React, { useState, useEffect } from "react";
 
 const Window_Width = () => {
-  const [width, setWidth] = useState(window.innerWidth);
+  // Safely get initial width (fallback to 0 if window is undefined)
+  const getWidth = () =>
+    typeof window !== "undefined" && window.innerWidth
+      ? window.innerWidth
+      : 0;
+
+  const [width, setWidth] = useState(getWidth);
 
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
+    if (typeof window === "undefined") {
+      // If window is not defined (SSR), skip effect
+      return;
+    }
+
+    const handleResize = () => {
+      try {
+        setWidth(window.innerWidth);
+      } catch (error) {
+        console.error("Error reading window width:", error);
+      }
+    };
 
     window.addEventListener("resize", handleResize);
 
-    // Cleanup listener on unmount
-    return () => window.removeEventListener("resize", handleResize);
+    // Initial call in case window resized before event fires
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
