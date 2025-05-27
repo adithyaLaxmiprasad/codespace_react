@@ -1,8 +1,21 @@
-// Toggle Visibility
+import React, { useState } from 'react';
 
-// 1. Goal: Toggle the visibility of a text message.
-// 2. Steps:
-//     - Use useState to create a isVisible state with an initial value of false .
-//     - Display a button that toggles the boolean isVisible state.
-//     - Conditionally render a message when isVisible is true.
-//     - Write your code within the file, by the name of component as Toggle_Visibility
+const Toggle_Visibility = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleMessage = () => {
+    setIsVisible(prev => !prev);
+  };
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+      <button onClick={toggleMessage}>
+        {isVisible ? 'Hide Message' : 'Show Message'}
+      </button>
+      {isVisible && <p>The message is now visible!</p>}
+    </div>
+  );
+};
+
+export default Toggle_Visibility;
+
