@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from "react";
 
 const Local_Storage = () => {
-  // Initialize state from localStorage or empty string if none exists
-  const [input, setInput] = useState(() => {
-    return localStorage.getItem("userInput") || "";
-  });
+  // Safe retrieval of localStorage item with error handling
+  const getLocalStorage = (key) => {
+    try {
+      const storedValue = localStorage.getItem(key);
+      return storedValue !== null ? storedValue : "";
+    } catch (error) {
+      console.warn("localStorage access failed:", error);
+      return ""; // fallback value
+    }
+  };
 
-  // Update localStorage whenever input changes
+  const [input, setInput] = useState(() => getLocalStorage("userInput"));
+
   useEffect(() => {
-    localStorage.setItem("userInput", input);
+    try {
+      localStorage.setItem("userInput", input);
+    } catch (error) {
+      console.warn("Saving to localStorage failed:", error);
+      // Optional: alert or fallback logic here
+    }
   }, [input]);
 
-  // Handle input change
   const handleChange = (e) => {
     setInput(e.target.value);
   };
