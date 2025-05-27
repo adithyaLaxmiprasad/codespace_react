@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
+const MAX_COUNT = 1000;
+
 const Timeout_Counter = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // Set up the interval to increment count every second
     const timer = setInterval(() => {
-      setCount(prevCount => prevCount + 1);
+      try {
+        setCount(prevCount => {
+          if (prevCount >= MAX_COUNT) {
+            clearInterval(timer);
+            return prevCount;
+          }
+          return prevCount + 1;
+        });
+      } catch (error) {
+        console.error('Error incrementing count:', error);
+        clearInterval(timer);
+      }
     }, 1000);
 
-    // Cleanup function to clear the interval when component unmounts
     return () => clearInterval(timer);
   }, []);
 
@@ -17,6 +28,7 @@ const Timeout_Counter = () => {
     <div style={{ padding: '1rem' }}>
       <h2>Timeout Counter</h2>
       <p>Count: {count}</p>
+      {count >= MAX_COUNT && <p>Max count reached.</p>}
     </div>
   );
 };
