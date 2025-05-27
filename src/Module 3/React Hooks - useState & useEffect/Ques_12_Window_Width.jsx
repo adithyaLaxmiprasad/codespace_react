@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Window_Width = () => {
-  // Safely get initial width (fallback to 0 if window is undefined)
+  // Safely get initial width (fallback 0 if window undefined)
   const getWidth = () =>
     typeof window !== "undefined" && window.innerWidth
       ? window.innerWidth
@@ -10,23 +10,16 @@ const Window_Width = () => {
   const [width, setWidth] = useState(getWidth);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      // If window is not defined (SSR), skip effect
-      return;
-    }
+    if (typeof window === "undefined") return; // SSR safety
 
     const handleResize = () => {
-      try {
-        setWidth(window.innerWidth);
-      } catch (error) {
-        console.error("Error reading window width:", error);
-      }
+      const currentWidth = window.innerWidth;
+      setWidth((prevWidth) => (prevWidth !== currentWidth ? currentWidth : prevWidth));
     };
 
     window.addEventListener("resize", handleResize);
 
-    // Initial call in case window resized before event fires
-    handleResize();
+    // No immediate setWidth call here; initial state already set.
 
     return () => {
       window.removeEventListener("resize", handleResize);
