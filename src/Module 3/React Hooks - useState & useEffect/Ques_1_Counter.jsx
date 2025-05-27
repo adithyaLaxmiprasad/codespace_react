@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';  // Added for type safety
 
 /**
- * A simple counter component that increments by 1 on button click.
- * Uses React's useState hook for state management.
+ * Interactive counter component with increment functionality
+ * Demonstrates React useState hook with functional updates
  */
 const Counter = () => {
-  // Initialize count state with a default value of 0
   const [count, setCount] = useState(0);
+
+  // Using functional update for state consistency
+  const handleIncrement = () => {
+    setCount(currentCount => currentCount + 1);
+  };
 
   return (
     <div>
-      {/* Display the current count value */}
       <p>Count: {count}</p>
-      
-      {/* Button to increment count by 1 */}
-      <button onClick={() => setCount(count + 1)}>
+      <button onClick={handleIncrement}>
         Increment
       </button>
     </div>
   );
+};
+
+// Prop type documentation (demonstrates best practice)
+Counter.propTypes = {
+  // Example for future prop expansion:
+  // initialValue: PropTypes.number
 };
 
 export default Counter;
