@@ -1,30 +1,26 @@
-import React from 'react';
-import Ques_1 from './Module 3/Introduction to ReactJS/Ques_1';
-import Ques_2 from './Module 3/Introduction to ReactJS/Ques_2';
-import Greeting from './Module 3/Introduction to ReactJS/Ques_3';
-import Profile from './Module 3/Introduction to ReactJS/Ques_5';
-import LoginMessage from './Module 3/Introduction to ReactJS/Ques_6';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import NavBar from "./Module 4/React Router - Navigation in React/NavBar";
+import Home from "./Module 4/React Router - Navigation in React/Home";
+import About from "./Module 4/React Router - Navigation in React/About";
+import Contact from "./Module 4/React Router - Navigation in React/Contact";
+import Subpage from "./Module 4/React Router - Navigation in React/Subpage";
 
 function App() {
   return (
-    <div>
-      <Ques_1 />
-      <Ques_1 message="Welcome to React!" />
-      <Ques_1 
-        message="Styled and with children!" 
-        style={{ color: 'blue', fontWeight: 'bold' }} 
-        className="custom-class"
-      >
-        <span> - Extra content here</span>
-      </Ques_1>
-      <Ques_2 />
-      <Greeting />
-      <Profile name="Amrutha" age={22} />
-
-      {/* Conditional Rendering Component */}
-      <LoginMessage isLoggedIn={true} />
-      <LoginMessage isLoggedIn={false} />
-    </div>
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} >
+          <Route path="subpage" element={<Subpage />} /> {/* Nested route */}
+        </Route>
+        <Route path="/contact" element={<Contact />} />
+        {/* Redirect unknown paths to Home */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
