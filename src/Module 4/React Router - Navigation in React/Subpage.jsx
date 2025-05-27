@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 function Subpage() {
   return (
     <div>
-      <h3>Subpage Component</h3>
-      <p>This is a nested subpage inside About or Home.</p>
+      <h2>About Subpage</h2>
+      <p>This is a nested subpage under About.</p>
     </div>
   );
 }

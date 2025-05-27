@@ -1,16 +1,22 @@
-import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
 
 function Home() {
   return (
     <div>
-      <h2>Home Page</h2>
-      <p>Welcome to the Home page of our React Router demo.</p>
+      <h1>Welcome to the Home Page</h1>
+      <p>This is the main landing page.</p>
+      
+      {/* Navigation to nested subpage */}
+      <nav>
+        <Link to="about/subpage" style={{ color: 'blue', textDecoration: 'underline' }}>
+          Go to About's Subpage
+        </Link>
+      </nav>
 
-      {/* Link to nested subpage */}
-      <Link to="about/subpage">Go to About's Subpage</Link>
+      <hr />
 
-      {/* Render nested routes if any */}
+      {/* Render nested route here */}
       <Outlet />
     </div>
   );

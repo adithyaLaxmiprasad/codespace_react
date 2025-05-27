@@ -1,22 +1,23 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function NavBar() {
   const activeStyle = {
-    fontWeight: "bold",
-    color: "red",
+    fontWeight: 'bold',
+    color: 'red',
+    textDecoration: 'underline',
   };
 
   return (
-    <nav style={{ marginBottom: "20px" }}>
-      <NavLink to="/" style={({ isActive }) => (isActive ? activeStyle : undefined)} end>
+    <nav style={{ marginBottom: 20 }}>
+      <NavLink to="/" end style={({ isActive }) => (isActive ? activeStyle : undefined)}>
         Home
-      </NavLink>{" "}
-      |{" "}
+      </NavLink>{' '}
+      |{' '}
       <NavLink to="/about" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
         About
-      </NavLink>{" "}
-      |{" "}
+      </NavLink>{' '}
+      |{' '}
       <NavLink to="/contact" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
         Contact
       </NavLink>
