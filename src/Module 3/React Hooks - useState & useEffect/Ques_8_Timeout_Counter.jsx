@@ -1,27 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const MAX_COUNT = 1000;
 
 const Timeout_Counter = () => {
   const [count, setCount] = useState(0);
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    if (timerRef.current !== null) return; // Prevent multiple intervals
+
+    timerRef.current = setInterval(() => {
       try {
         setCount(prevCount => {
           if (prevCount >= MAX_COUNT) {
-            clearInterval(timer);
+            clearInterval(timerRef.current);
+            timerRef.current = null;
             return prevCount;
           }
           return prevCount + 1;
         });
       } catch (error) {
         console.error('Error incrementing count:', error);
-        clearInterval(timer);
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
       }
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, []);
 
   return (
