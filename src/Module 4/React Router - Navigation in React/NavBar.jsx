@@ -20,6 +20,10 @@ function NavBar() {
       <NavLink to="/contact" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
         Contact
       </NavLink>
+      
+      <NavLink to="/counter" style={styles.link}>
+        Counter
+      </NavLink>
     </nav>
   );
 }
