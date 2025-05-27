@@ -1,7 +1,24 @@
-// Timeout Counter using useEffect
-// Description: Create a counter that increments by one every second using the useEffect hook.
+import React, { useState, useEffect } from 'react';
 
-// Steps to needed:
-//     - setInterval : Repeatedly increments the count every 1 second.
-//     - clearInterval(timer) : Clears the timer when component unmounts to prevent memory leaks.
-//     - Write your code within the file, by the name of component as Timeout_Counter
+const Timeout_Counter = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Set up the interval to increment count every second
+    const timer = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
+
+    // Cleanup function to clear the interval when component unmounts
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div style={{ padding: '1rem' }}>
+      <h2>Timeout Counter</h2>
+      <p>Count: {count}</p>
+    </div>
+  );
+};
+
+export default Timeout_Counter;
