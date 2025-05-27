@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 function Contact() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const validateEmail = (email) => {
-    // Simple regex for email validation
+  const validateEmail = useCallback((email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+    setError(null);
+
     if (!validateEmail(email)) {
       setError('Please enter a valid email address.');
       return;
     }
-    setError(null);
-    setSubmitted(true);
-  };
+
+    setLoading(true);
+    try {
+      // Simulate async API call
+      await new Promise((res) => setTimeout(res, 1000));
+      setSubmitted(true);
+    } catch {
+      setError('Submission failed, please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, [email, validateEmail]);
+
+  const handleChange = useCallback((e) => {
+    setEmail(e.target.value);
+    if (error) setError(null);
+  }, [error]);
 
   return (
     <div>
@@ -33,11 +49,18 @@ function Contact() {
             id="email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleChange}
             required
+            aria-describedby="email-error"
           />
-          <button type="submit">Submit</button>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <button type="submit" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit'}
+          </button>
+          {error && (
+            <p id="email-error" style={{ color: 'red' }} role="alert">
+              {error}
+            </p>
+          )}
         </form>
       )}
     </div>
@@ -45,3 +68,9 @@ function Contact() {
 }
 
 export default Contact;
+
+// TEST SUGGESTIONS:
+// - Test form validation errors appear on invalid input
+// - Test successful form submission flow changes UI
+// - Test button disabled state while submitting
+// - Test error message ARIA role
