@@ -15,13 +15,16 @@ const Local_Storage = () => {
   const [input, setInput] = useState(() => getLocalStorage("userInput"));
 
   useEffect(() => {
-    try {
+  try {
+    const storedValue = localStorage.getItem("userInput") || "";
+    if (input !== storedValue) {
       localStorage.setItem("userInput", input);
-    } catch (error) {
-      console.warn("Saving to localStorage failed:", error);
-      // Optional: alert or fallback logic here
     }
-  }, [input]);
+  } catch (error) {
+    console.warn("Saving to localStorage failed:", error);
+  }
+}, [input]);
+
 
   const handleChange = (e) => {
     setInput(e.target.value);
