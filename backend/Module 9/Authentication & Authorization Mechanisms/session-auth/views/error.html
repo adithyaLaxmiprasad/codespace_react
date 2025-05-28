@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Session Auth</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .error-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            color: #d63031;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .error-message {
+            color: #636e72;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .error-details {
+            background: #ffe8e6;
+            border: 1px solid #ff7675;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .error-details h4 {
+            color: #d63031;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .error-details ul {
+            color: #2d3436;
+            padding-left: 20px;
+        }
+        
+        .error-details li {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #ddd;
+            color: #333;
+        }
+        
+        .retry-info {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f1f2f6;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #57606f;
+        }
+        
+        @media (max-width: 480px) {
+            .error-container {
+                padding: 30px 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">❌</div>
+        <h1 class="error-title">Authentication Error</h1>
+        <p class="error-message">
+            We encountered an issue with your login attempt. Please check your credentials and try again.
+        </p>
+        
+        <div class="error-details">
+            <h4>🔍 Possible Issues:</h4>
+            <ul>
+                <li>Invalid username or password</li>
+                <li>Account may not exist</li>
+                <li>Session has expired</li>
+                <li>Network connectivity issues</li>
+            </ul>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/login" class="btn btn-primary">🔄 Try Again</a>
+            <button onclick="window.history.back()" class="btn btn-secondary">← Go Back</button>
+        </div>
+        
+        <div class="retry-info">
+            <strong>💡 Tip:</strong> Make sure you're using the correct demo credentials:<br>
+            <code>admin/password123</code>, <code>user1/mypassword</code>, or <code>john/john123</code>
+        </div>
+    </div>
+    
+    <script>
+        // Get error message from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorMessage = urlParams.get('message');
+        
+        if (errorMessage) {
+            const messageElement = document.querySelector('.error-message');
+            messageElement.textContent = decodeURIComponent(errorMessage);
+        }
+        
+        // Auto-redirect to login after 10 seconds
+        setTimeout(() => {
+            window.location.href = '/login';
+        }, 10000);
+    </script>
+</body>
+</html>
