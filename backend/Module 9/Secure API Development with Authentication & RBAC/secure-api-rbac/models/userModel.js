@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
+    index: true // Performance optimization
   },
   password: {
     type: String,
@@ -16,10 +17,20 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  loginAttempts: {
+    type: Number,
+    default: 0
+  },
+  lockUntil: {
+    type: Date
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
+
+// Add text index for username
+userSchema.index({ username: 'text' });
 
 module.exports = mongoose.model('User', userSchema);
