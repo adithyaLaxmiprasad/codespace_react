@@ -4,108 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Session Auth</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .login-header h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .login-header p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .demo-credentials {
-            margin-top: 25px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .demo-credentials h4 {
-            margin-bottom: 8px;
-            color: #333;
-        }
-        
-        .credential-item {
-            margin: 5px 0;
-            font-family: monospace;
-        }
-    </style>
+    <link rel="stylesheet" href="/backend/Module 9/Authentication & Authorization Mechanisms/session-auth/login.css">
 </head>
 <body>
     <div class="login-container">
@@ -114,26 +13,70 @@
             <p>Please sign in to your account</p>
         </div>
         
-        <form action="/login" method="POST">
+        <div id="messageArea" class="message-area" style="display: none;"></div>
+        
+        <form action="/login" method="POST" id="loginForm" novalidate>
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <label for="username">Username <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your username" 
+                    required 
+                    maxlength="50"
+                    autocomplete="username"
+                    class="form-input"
+                >
+                <div class="error-message" id="usernameError"></div>
             </div>
             
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <label for="password">Password <span class="required">*</span></label>
+                <div class="password-input-container">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password" 
+                        required 
+                        maxlength="100"
+                        autocomplete="current-password"
+                        class="form-input"
+                    >
+                    <button type="button" class="password-toggle" id="togglePassword" aria-label="Toggle password visibility">
+                        👁️
+                    </button>
+                </div>
+                <div class="error-message" id="passwordError"></div>
             </div>
             
-            <button type="submit" class="login-btn">Sign In</button>
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span class="btn-text">Sign In</span>
+                <span class="btn-spinner" style="display: none;">⏳</span>
+            </button>
         </form>
         
         <div class="demo-credentials">
             <h4>🧪 Demo Credentials:</h4>
-            <div class="credential-item">admin / password123</div>
-            <div class="credential-item">user1 / mypassword</div>
-            <div class="credential-item">john / john123</div>
+            <div class="credential-list">
+                <div class="credential-item" onclick="fillCredentials('admin', 'password123')">
+                    <strong>admin</strong> / password123
+                </div>
+                <div class="credential-item" onclick="fillCredentials('user1', 'mypassword')">
+                    <strong>user1</strong> / mypassword
+                </div>
+                <div class="credential-item" onclick="fillCredentials('john', 'john123')">
+                    <strong>john</strong> / john123
+                </div>
+            </div>
+        </div>
+        
+        <div class="security-notice">
+            <p>🔒 This is a demo application. Your session will be secure and encrypted.</p>
         </div>
     </div>
+    
+    <script src="/backend/Module 9/Authentication & Authorization Mechanisms/session-auth/login.js"></script>
 </body>
 </html>
